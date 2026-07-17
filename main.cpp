@@ -58,28 +58,50 @@ int main() {
     return 1; // abort
   }
 
-  if ((product_type == "banana") && !(unit_type == "single" || unit_type == "bunch")) {
-    cout << "Invalid unit type entered! For bananas, the unit type must be 'single' or 'bunch'." << endl;
-    return 1; // abort
+  if (accept_sale != "y" && accept_sale != "n" && accept_sale != "Y" && accept_sale != "N") {
+    cout << "Invalid promo input! Must be 'y' or 'n'." << endl; 
+    return 1;
   }
-  //...
 
-  // TODO: COMPUTE THE COST OF THIS PURCHASE
-  if ((product_type == "banana") && (unit_type == "single")) {
-    total_cost = quantity * (price_banana / 100.); // total cost in dollars
-    //...
+  int items_per_unit = 0; 
+  double price_per_unit = 0.0;
+
+  if (product_type == "banana") {
+    if (unit_type != "single" && unit_type != "bunch") {
+      cout << "Invalid unit! Bananas must be 'single' or 'bunch'." << endl;
+      return 1;
+      }
+      price_per_unit = (unit_type == "single") ? (price_banana / 100.0) : price_bunch_bananas;
+      items_per_unit = (unit_type == "single") ? 1 : 7;
+    }
+  else if (product_type == "apple") {
+    if (unit_type != "single" && unit_type != "bag") {
+      cout << "Invalid unit! Apples must be 'single' or 'bag'. Aborting." << endl;
+      return 1;
+    }
+    price_per_unit = (unit_type == "single") ? (price_apple / 100.0) : price_bag_apples;
+    items_per_unit = (unit_type == "single") ? 1 : 8;
+  } 
+  else if (product_type == "watermelon") {
+    if (unit_type != "single") {
+      cout << "Invalid unit! Watermelon must be 'single'. Aborting." << endl;
+      return 1;
+    }
+    price_per_unit = price_watermelon / 100.0;
+    items_per_unit = 1;
+  } 
+  else {
+    cout << "Invalid product! Choose 'apple', 'banana', or 'watermelon'. Aborting." << endl;
+    return 1;
   }
-  if (product_type == "banana") && (unit_type == "bunch")) {
-    total_cost = quantity *   //...
-    //...
+  if (accept_sale == "y" || accept_sale == "Y") {
+    quantity += 1;
+    total_cost = (quantity * price_per_unit) * 0.90; // Calculate with 10% discount
+  } else {
+    total_cost = quantity * price_per_unit;
   }
-  //...
-  //...
 
-
-  // TODO: APPLY THE OPTIONAL DISCOUNT TO FINAL TOTAL COST
-  //...
-
+  item_cost = total_cost / (quantity * items_per_unit);
       
   // DO NOT EDIT BELOW THIS LINE!
 
